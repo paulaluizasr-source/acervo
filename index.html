@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Acervo de Arquivos — Design, Tipografia, Cinema & Arte</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f3efe6; --ink:#141414; --muted:#6b665c; --line:#cfc8b8;
+  --red:#d6361f; --card:#faf8f2;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:Inter,system-ui,sans-serif;font-size:15px;line-height:1.45}
+a{color:inherit}
+.wrap{max-width:1240px;margin:0 auto;padding:40px 28px 80px}
+header{border-bottom:2px solid var(--ink);padding-bottom:22px;margin-bottom:22px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end}
+.kicker{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--red);margin-bottom:10px}
+h1{font-family:"Instrument Serif",serif;font-weight:400;font-size:clamp(48px,8vw,104px);line-height:.9;letter-spacing:-.02em}
+h1 em{color:var(--red)}
+.lede{max-width:520px;color:var(--muted);margin-top:14px}
+.count{font-family:"IBM Plex Mono",monospace;font-size:12px;text-align:right;line-height:1.7}
+.count b{font-family:"Instrument Serif",serif;font-weight:400;font-size:64px;display:block;line-height:1;color:var(--ink)}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:12px}
+.search{flex:1 1 260px;border:1.5px solid var(--ink);background:var(--card);padding:11px 14px;font:inherit;border-radius:0;outline:none}
+.search:focus{box-shadow:4px 4px 0 var(--red)}
+.btn{border:1.5px solid var(--ink);background:var(--ink);color:var(--paper);padding:11px 16px;font-family:"IBM Plex Mono",monospace;font-size:12px;text-transform:uppercase;letter-spacing:.05em;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:hover{background:var(--red);border-color:var(--red);color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.chips .label{font-family:"IBM Plex Mono",monospace;font-size:11px;text-transform:uppercase;color:var(--muted);width:84px;padding-top:6px}
+.chip{border:1px solid var(--line);background:transparent;padding:5px 11px;border-radius:999px;font-size:13px;cursor:pointer;font-family:inherit;color:var(--ink)}
+.chip:hover{border-color:var(--ink)}
+.chip.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:0;margin-top:22px;border-top:1px solid var(--ink);border-left:1px solid var(--ink)}
+.card{position:relative;display:flex;flex-direction:column;gap:10px;padding:18px 18px 16px;border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);background:var(--card);text-decoration:none;min-height:210px;transition:background .15s}
+.card:hover{background:#fff}
+.card:hover .name{color:var(--red)}
+.card.flash{animation:flash 1.4s ease}
+@keyframes flash{0%,40%{background:#ffe3d9}100%{background:var(--card)}}
+.top{display:flex;justify-content:space-between;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted)}
+.badge{font-family:"IBM Plex Mono",monospace;font-size:10px;text-transform:uppercase;letter-spacing:.05em;padding:2px 6px}
+.badge.mine{background:var(--ink);color:var(--paper)}
+.badge.new{background:var(--red);color:#fff}
+.badge.added{border:1px solid var(--ink)}
+.name{font-family:"Instrument Serif",serif;font-size:29px;line-height:1.02;transition:color .15s}
+.desc{font-size:13.5px;color:#3a3732;flex:1}
+.meta{display:flex;flex-direction:column-reverse;gap:3px;border-top:1px dashed var(--line);padding-top:8px;max-width:100%;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted)}
+.meta .url{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.del{position:absolute;top:10px;right:10px;background:none;border:none;cursor:pointer;color:var(--muted);font-size:14px;display:none}
+.card:hover .del{display:block}
+.empty{padding:40px;text-align:center;color:var(--muted);font-family:"IBM Plex Mono",monospace;grid-column:1/-1;border-right:1px solid var(--ink);border-bottom:1px solid var(--ink)}
+dialog{border:2px solid var(--ink);background:var(--paper);padding:26px;max-width:460px;width:92vw;margin:auto}
+dialog::backdrop{background:rgba(20,20,20,.45)}
+dialog h2{font-family:"Instrument Serif",serif;font-weight:400;font-size:36px;margin-bottom:14px}
+dialog label{display:block;font-family:"IBM Plex Mono",monospace;font-size:11px;text-transform:uppercase;color:var(--muted);margin:12px 0 4px}
+dialog input,dialog select,dialog textarea{width:100%;border:1.5px solid var(--ink);background:var(--card);padding:9px 11px;font:inherit;border-radius:0}
+dialog .row{display:flex;gap:8px;justify-content:flex-end;margin-top:18px}
+.note{font-size:12px;color:var(--muted);margin-top:8px}
+footer{margin-top:40px;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+@media (max-width:640px){header{grid-template-columns:1fr}.count{text-align:left}.chips .label{width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <div class="kicker">Acervo pessoal · Luiza Ribeiro</div>
+      <h1>Arquivo de <em>arquivos</em></h1>
+      <p class="lede">Design gráfico, tipografia, cinema, arte e cultura visual: os acervos que eu salvo, mais algumas descobertas, todos num lugar só.</p>
+    </div>
+    <div class="count"><b id="total">0</b>acervos<br><span id="shown"></span></div>
+  </header>
+
+  <div class="controls">
+    <input class="search" id="q" type="search" placeholder="Buscar por nome, região, tema…">
+    <button class="btn ghost" id="random">↯ Me surpreenda</button>
+    <button class="btn" id="add">+ Adicionar link</button>
+  </div>
+  <div class="chips" id="origins"><span class="label">Origem</span></div>
+  <div class="chips" id="cats"><span class="label">Tema</span></div>
+  <div class="chips" id="regions"><span class="label">Região</span></div>
+
+  <div class="grid" id="grid"></div>
+
+  <footer>
+    <span>Clique num cartão para abrir o acervo em nova aba.</span>
+    <span>Links adicionados ficam salvos neste navegador.</span>
+  </footer>
+</div>
+
+<dialog id="dlg">
+  <form id="form" method="dialog">
+    <h2>Novo acervo</h2>
+    <label for="f-name">Nome</label><input id="f-name" required>
+    <label for="f-url">Link</label><input id="f-url" type="url" placeholder="https://" required>
+    <label for="f-cat">Tema</label><select id="f-cat"></select>
+    <label for="f-region">Região</label><input id="f-region" placeholder="ex.: Brasil, Global, Japão">
+    <label for="f-desc">Nota (opcional)</label><textarea id="f-desc" rows="2"></textarea>
+    <p class="note" id="f-note"></p>
+    <div class="row">
+      <button type="button" class="btn ghost" id="cancel">Cancelar</button>
+      <button type="submit" class="btn">Salvar</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+const CATS=["Design gráfico","Tipografia","Cartazes & política","Identidade visual","Cinema","Arte","Fotografia & imagem","Acervos gerais"];
+const BASE=[
+// ——— minha coleção
+{n:"People's Graphic Design Archive",u:"https://peoplesgdarchive.org/",c:"Design gráfico",r:"Global",o:"mine",d:"Arquivo colaborativo e aberto que documenta design gráfico fora do cânone tradicional."},
+{n:"Arabic Design Archive",u:"https://arabicdesignarchive.com/",c:"Design gráfico",r:"Mundo árabe",o:"mine",d:"Acervo dedicado ao design gráfico moderno do mundo árabe."},
+{n:"MCB Collection",u:"https://mcbcollection.com/",c:"Design gráfico",r:"Global",o:"mine",d:"Coleção de design gráfico e material impresso."},
+{n:"East Asian Graphics Archive",u:"https://eastasiangraphicsarchive.com/",c:"Design gráfico",r:"Ásia Oriental",o:"mine",d:"Design gráfico, impressos e cultura visual do Leste Asiático."},
+{n:"La Patria",u:"https://lapatria.uy/",c:"Design gráfico",r:"Uruguai",o:"mine",d:"Arquivo de cultura gráfica uruguaia."},
+{n:"African Digital Art",u:"https://www.africandigitalart.com/",c:"Arte",r:"África",o:"mine",d:"Plataforma de arte, design e criatividade digital de artistas africanos e da diáspora."},
+{n:"Type Directors Club",u:"https://tdc.org/",c:"Tipografia",r:"Global",o:"mine",d:"Organização histórica de tipografia; competições anuais e arquivo de vencedores."},
+{n:"Gráfica Latina",u:"https://graficalatina.com/",c:"Design gráfico",r:"América Latina",o:"mine",d:"Arquivo de design gráfico latino-americano."},
+{n:"Archivo Gráfico",u:"https://archivografico.org/Index-Selection",c:"Design gráfico",r:"América Latina",o:"mine",d:"Seleção indexada de peças gráficas."},
+{n:"Black Film Archive",u:"https://blackfilmarchive.com/",c:"Cinema",r:"EUA",o:"mine",d:"Guia de filmes negros feitos entre 1915 e 1979, com onde assistir a cada um."},
+{n:"CASCA Archive",u:"https://casca-archive.org/",c:"Arte",r:"Global",o:"mine",d:"Arquivo independente de arte e cultura visual."},
+
+// ——— descobertas: design & tipografia
+{n:"Letterform Archive Online",u:"https://oa.letterformarchive.org/",c:"Tipografia",r:"Global",o:"new",d:"Milhares de itens digitalizados em alta resolução: letreiramento, tipos, livros, cartazes e efêmera."},
+{n:"Fonts In Use",u:"https://fontsinuse.com/",c:"Tipografia",r:"Global",o:"new",d:"Arquivo pesquisável de tipografia aplicada — busque por fonte, designer, época ou formato."},
+{n:"Herb Lubalin Study Center",u:"https://lubalincenter.cooper.edu/",c:"Tipografia",r:"EUA",o:"new",d:"Acervo da Cooper Union em torno de Herb Lubalin e do design tipográfico americano."},
+{n:"Khatt Foundation",u:"https://www.khtt.net/",c:"Tipografia",r:"Mundo árabe",o:"new",d:"Rede e arquivo sobre tipografia e design árabe contemporâneo e multiscript."},
+{n:"Tipos Latinos",u:"https://www.tiposlatinos.com/",c:"Tipografia",r:"América Latina",o:"new",d:"Bienal de tipografia latino-americana, com arquivo das seleções de cada edição."},
+{n:"Design Reviewed",u:"https://designreviewed.com/",c:"Design gráfico",r:"Global",o:"new",d:"Manuais, revistas, catálogos e efêmera de design do pós-guerra digitalizados página a página."},
+{n:"AIGA Design Archives",u:"https://designarchives.aiga.org/",c:"Design gráfico",r:"EUA",o:"new",d:"Décadas de trabalhos premiados nas competições da AIGA."},
+{n:"eMuseum — Museum für Gestaltung",u:"https://www.emuseum.ch/",c:"Design gráfico",r:"Suíça",o:"new",d:"Coleção online do museu de design de Zurique: cartazes, design gráfico e o estilo suíço."},
+{n:"Cooper Hewitt Collection",u:"https://collection.cooperhewitt.org/",c:"Design gráfico",r:"Global",o:"new",d:"Coleção do museu nacional de design dos EUA, com busca por cor, período e técnica."},
+{n:"M+ Collection",u:"https://www.mplus.org.hk/en/collection/",c:"Design gráfico",r:"Ásia",o:"new",d:"Museu de cultura visual de Hong Kong: design, arquitetura e imagem em movimento asiáticos."},
+{n:"Eye Magazine",u:"https://www.eyemagazine.com/",c:"Design gráfico",r:"Global",o:"new",d:"Revista internacional de design gráfico, com arquivo de ensaios desde os anos 1990."},
+{n:"Standards Manual",u:"https://standardsmanual.com/",c:"Identidade visual",r:"Global",o:"new",d:"Reedições e arquivo de manuais de identidade históricos (NASA, NYCTA, EPA…)."},
+{n:"Logobook",u:"https://www.logobook.com/",c:"Identidade visual",r:"Global",o:"new",d:"Índice de logotipos e marcas, organizado por forma, designer e país."},
+
+// ——— cartazes & política
+{n:"Center for the Study of Political Graphics",u:"https://www.politicalgraphics.org/",c:"Cartazes & política",r:"Global",o:"new",d:"Um dos maiores acervos de cartazes políticos e de movimentos sociais do mundo."},
+{n:"Interference Archive",u:"https://interferencearchive.org/",c:"Cartazes & política",r:"Global",o:"new",d:"Arquivo de cultura material de movimentos sociais: zines, cartazes, panfletos, camisetas."},
+{n:"Docs Populi",u:"https://www.docspopuli.org/",c:"Cartazes & política",r:"Cuba / Global",o:"new",d:"Cartazes políticos, com destaque para a gráfica cubana e de solidariedade."},
+{n:"Poster House",u:"https://posterhouse.org/",c:"Cartazes & política",r:"Global",o:"new",d:"Museu dedicado ao cartaz, com coleção e textos sobre a história do formato."},
+{n:"PolishPoster",u:"https://polishposter.com/",c:"Cartazes & política",r:"Polônia",o:"new",d:"Cartazes da escola polonesa, incluindo cinema e teatro."},
+
+// ——— Brasil
+{n:"Hemeroteca Digital Brasileira",u:"https://bndigital.bn.gov.br/hemeroteca-digital/",c:"Acervos gerais",r:"Brasil",o:"new",d:"Jornais e revistas brasileiros digitalizados pela Biblioteca Nacional — ótimo para tipografia e anúncios antigos."},
+{n:"Brasiliana Fotográfica",u:"https://brasilianafotografica.bn.gov.br/",c:"Fotografia & imagem",r:"Brasil",o:"new",d:"Portal de fotografia histórica brasileira reunindo vários acervos públicos."},
+{n:"Brasiliana Iconográfica",u:"https://www.brasilianaiconografica.art.br/",c:"Fotografia & imagem",r:"Brasil",o:"new",d:"Gravuras, desenhos e pinturas sobre o Brasil dos séculos XVI ao XIX."},
+{n:"Enciclopédia Itaú Cultural",u:"https://enciclopedia.itaucultural.org.br/",c:"Arte",r:"Brasil",o:"new",d:"Verbetes sobre artistas, obras, movimentos e designers brasileiros."},
+{n:"Instituto Moreira Salles",u:"https://ims.com.br/",c:"Fotografia & imagem",r:"Brasil",o:"new",d:"Acervos de fotografia, música, literatura e iconografia brasileiras."},
+{n:"Cinemateca Brasileira",u:"https://cinemateca.org.br/",c:"Cinema",r:"Brasil",o:"new",d:"Maior acervo audiovisual da América do Sul, com cartazes e documentação de filmes."},
+
+// ——— cinema
+{n:"Art of the Title",u:"https://www.artofthetitle.com/",c:"Cinema",r:"Global",o:"new",d:"Arquivo de sequências de abertura e créditos de cinema e TV, com entrevistas com os designers."},
+{n:"Movie Title Stills Collection",u:"https://annyas.com/screenshots/",c:"Cinema",r:"Global",o:"new",d:"Telas de título de centenas de filmes, de 1910 até hoje — pura tipografia de cinema."},
+{n:"Film-Grab",u:"https://film-grab.com/",c:"Cinema",r:"Global",o:"new",d:"Frames de filmes organizados por título, para referência de cor, enquadramento e direção de arte."},
+{n:"CineMaterial",u:"https://www.cinematerial.com/",c:"Cinema",r:"Global",o:"new",d:"Banco de cartazes de cinema de vários países e épocas."},
+{n:"Arab Image Foundation",u:"https://arabimagefoundation.org/",c:"Fotografia & imagem",r:"Mundo árabe",o:"new",d:"Acervo de fotografia do Oriente Médio, Norte da África e diáspora árabe."},
+
+// ——— arte & acervos gerais
+{n:"Monoskop",u:"https://monoskop.org/",c:"Acervos gerais",r:"Global",o:"new",d:"Wiki e biblioteca de vanguardas, arte, mídia e design — com muitos livros e revistas em PDF."},
+{n:"UbuWeb",u:"https://ubu.com/",c:"Arte",r:"Global",o:"new",d:"Arquivo de vanguarda: filme experimental, poesia concreta, som e arte conceitual."},
+{n:"The Public Domain Review",u:"https://publicdomainreview.org/",c:"Acervos gerais",r:"Global",o:"new",d:"Ensaios e imagens curiosas de domínio público — gravuras, diagramas, impressos raros."},
+{n:"Biodiversity Heritage Library",u:"https://www.biodiversitylibrary.org/",c:"Fotografia & imagem",r:"Global",o:"new",d:"Livros de história natural digitalizados — mina de ilustração científica e litografia."},
+{n:"Rijksmuseum",u:"https://www.rijksmuseum.nl/en",c:"Arte",r:"Holanda",o:"new",d:"Coleção online em alta resolução, livre para baixar e reutilizar."},
+{n:"Internet Archive",u:"https://archive.org/",c:"Acervos gerais",r:"Global",o:"new",d:"Livros, revistas, filmes e catálogos digitalizados — vale buscar por 'type specimen' ou revistas de design."}
+];
+
+const KEY="acervo-luiza-added-v1";
+let added=[];
+try{added=JSON.parse(localStorage.getItem(KEY)||"[]")}catch(e){added=[]}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(added))}catch(e){}};
+
+const state={q:"",origin:"Todos",cat:"Todos",region:"Todos"};
+const all=()=>BASE.concat(added.map(a=>({...a,o:"added"})));
+const ORIG={"Todos":null,"Minha coleção":"mine","Descobertas":"new","Adicionados":"added"};
+const host=u=>{try{return new URL(u).hostname.replace(/^www\./,"")}catch(e){return u}};
+const esc=s=>String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const norm=s=>String(s||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
+
+function chipRow(id,opts,key){
+  const el=document.getElementById(id);
+  el.querySelectorAll(".chip").forEach(c=>c.remove());
+  opts.forEach(o=>{
+    const b=document.createElement("button");
+    b.className="chip"+(state[key]===o?" on":"");b.textContent=o;
+    b.onclick=()=>{state[key]=o;render()};
+    el.appendChild(b);
+  });
+}
+
+function render(){
+  const items=all();
+  const regions=["Todos",...[...new Set(items.map(i=>i.r).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"pt"))];
+  if(!regions.includes(state.region))state.region="Todos";
+  chipRow("origins",Object.keys(ORIG),"origin");
+  chipRow("cats",["Todos",...CATS],"cat");
+  chipRow("regions",regions,"region");
+  const q=norm(state.q);
+  const list=items.filter(i=>
+    (!ORIG[state.origin]||i.o===ORIG[state.origin])&&
+    (state.cat==="Todos"||i.c===state.cat)&&
+    (state.region==="Todos"||i.r===state.region)&&
+    (!q||norm([i.n,i.d,i.r,i.c,i.u].join(" ")).includes(q)));
+  document.getElementById("total").textContent=items.length;
+  document.getElementById("shown").textContent=list.length===items.length?"todos visíveis":list.length+" visíveis";
+  const g=document.getElementById("grid");
+  if(!list.length){g.innerHTML='<div class="empty">Nada encontrado com esses filtros.</div>';return}
+  g.innerHTML=list.map((i,k)=>{
+    const badge=i.o==="mine"?'<span class="badge mine">Minha coleção</span>':i.o==="new"?'<span class="badge new">Descoberta</span>':'<span class="badge added">Adicionado</span>';
+    const del=i.o==="added"?`<button class="del" title="Remover" data-id="${esc(i.id)}">✕</button>`:"";
+    return `<a class="card" href="${esc(i.u)}" target="_blank" rel="noopener" data-i="${k}">
+      <div class="top"><span>№ ${String(k+1).padStart(3,"0")}</span>${badge}</div>
+      <div class="name">${esc(i.n)}</div>
+      <div class="desc">${esc(i.d)}</div>
+      <div class="meta"><span class="url">${esc(host(i.u))}</span><span>${esc(i.c)} · ${esc(i.r)}</span></div>${del}</a>`;
+  }).join("");
+  g.querySelectorAll(".del").forEach(b=>b.onclick=e=>{
+    e.preventDefault();e.stopPropagation();
+    added=added.filter(a=>a.id!==b.dataset.id);save();render();
+  });
+}
+
+document.getElementById("q").addEventListener("input",e=>{state.q=e.target.value;render()});
+document.getElementById("random").onclick=()=>{
+  const cards=[...document.querySelectorAll(".card")];if(!cards.length)return;
+  const c=cards[Math.floor(Math.random()*cards.length)];
+  c.scrollIntoView({behavior:"smooth",block:"center"});
+  c.classList.remove("flash");void c.offsetWidth;c.classList.add("flash");
+};
+
+const dlg=document.getElementById("dlg");
+document.getElementById("f-cat").innerHTML=CATS.map(c=>`<option>${c}</option>`).join("");
+document.getElementById("add").onclick=()=>{
+  document.getElementById("form").reset();
+  let ok=true;try{localStorage.setItem("_t","1");localStorage.removeItem("_t")}catch(e){ok=false}
+  document.getElementById("f-note").textContent=ok?"Fica salvo neste navegador.":"Este navegador não permite salvar: o link some ao recarregar a página.";
+  try{dlg.showModal()}catch(e){dlg.setAttribute("open","")}
+};
+document.getElementById("cancel").onclick=()=>dlg.close();
+document.getElementById("form").addEventListener("submit",e=>{
+  e.preventDefault();
+  let u=document.getElementById("f-url").value.trim();
+  if(!/^https?:\/\//i.test(u))u="https://"+u;
+  added.push({id:Date.now().toString(36),n:document.getElementById("f-name").value.trim(),u,
+    c:document.getElementById("f-cat").value,r:document.getElementById("f-region").value.trim()||"Global",
+    d:document.getElementById("f-desc").value.trim()||"Adicionado por mim."});
+  save();dlg.close();state.origin="Adicionados";render();
+});
+render();
+</script>
+</body>
+</html>
